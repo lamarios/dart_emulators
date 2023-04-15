@@ -20,7 +20,6 @@ mixin _$Toolchain {
   String get avdmanagerPath => throw _privateConstructorUsedError;
   String get emulatorPath => throw _privateConstructorUsedError;
   String get flutterPath => throw _privateConstructorUsedError;
-  String get xcrunPath => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ToolchainCopyWith<Toolchain> get copyWith =>
@@ -36,8 +35,7 @@ abstract class $ToolchainCopyWith<$Res> {
       {String adbPath,
       String avdmanagerPath,
       String emulatorPath,
-      String flutterPath,
-      String xcrunPath});
+      String flutterPath});
 }
 
 /// @nodoc
@@ -57,7 +55,6 @@ class _$ToolchainCopyWithImpl<$Res, $Val extends Toolchain>
     Object? avdmanagerPath = null,
     Object? emulatorPath = null,
     Object? flutterPath = null,
-    Object? xcrunPath = null,
   }) {
     return _then(_value.copyWith(
       adbPath: null == adbPath
@@ -76,10 +73,6 @@ class _$ToolchainCopyWithImpl<$Res, $Val extends Toolchain>
           ? _value.flutterPath
           : flutterPath // ignore: cast_nullable_to_non_nullable
               as String,
-      xcrunPath: null == xcrunPath
-          ? _value.xcrunPath
-          : xcrunPath // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
   }
 }
@@ -95,8 +88,7 @@ abstract class _$$_ToolchainCopyWith<$Res> implements $ToolchainCopyWith<$Res> {
       {String adbPath,
       String avdmanagerPath,
       String emulatorPath,
-      String flutterPath,
-      String xcrunPath});
+      String flutterPath});
 }
 
 /// @nodoc
@@ -114,7 +106,6 @@ class __$$_ToolchainCopyWithImpl<$Res>
     Object? avdmanagerPath = null,
     Object? emulatorPath = null,
     Object? flutterPath = null,
-    Object? xcrunPath = null,
   }) {
     return _then(_$_Toolchain(
       adbPath: null == adbPath
@@ -133,10 +124,6 @@ class __$$_ToolchainCopyWithImpl<$Res>
           ? _value.flutterPath
           : flutterPath // ignore: cast_nullable_to_non_nullable
               as String,
-      xcrunPath: null == xcrunPath
-          ? _value.xcrunPath
-          : xcrunPath // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -148,8 +135,7 @@ class _$_Toolchain extends _Toolchain {
       {required this.adbPath,
       required this.avdmanagerPath,
       required this.emulatorPath,
-      required this.flutterPath,
-      required this.xcrunPath})
+      required this.flutterPath})
       : super._();
 
   @override
@@ -160,12 +146,10 @@ class _$_Toolchain extends _Toolchain {
   final String emulatorPath;
   @override
   final String flutterPath;
-  @override
-  final String xcrunPath;
 
   @override
   String toString() {
-    return 'Toolchain(adbPath: $adbPath, avdmanagerPath: $avdmanagerPath, emulatorPath: $emulatorPath, flutterPath: $flutterPath, xcrunPath: $xcrunPath)';
+    return 'Toolchain(adbPath: $adbPath, avdmanagerPath: $avdmanagerPath, emulatorPath: $emulatorPath, flutterPath: $flutterPath)';
   }
 
   @override
@@ -179,14 +163,12 @@ class _$_Toolchain extends _Toolchain {
             (identical(other.emulatorPath, emulatorPath) ||
                 other.emulatorPath == emulatorPath) &&
             (identical(other.flutterPath, flutterPath) ||
-                other.flutterPath == flutterPath) &&
-            (identical(other.xcrunPath, xcrunPath) ||
-                other.xcrunPath == xcrunPath));
+                other.flutterPath == flutterPath));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, adbPath, avdmanagerPath,
-      emulatorPath, flutterPath, xcrunPath);
+  int get hashCode => Object.hash(
+      runtimeType, adbPath, avdmanagerPath, emulatorPath, flutterPath);
 
   @JsonKey(ignore: true)
   @override
@@ -200,8 +182,7 @@ abstract class _Toolchain extends Toolchain {
       {required final String adbPath,
       required final String avdmanagerPath,
       required final String emulatorPath,
-      required final String flutterPath,
-      required final String xcrunPath}) = _$_Toolchain;
+      required final String flutterPath}) = _$_Toolchain;
   const _Toolchain._() : super._();
 
   @override
@@ -212,8 +193,6 @@ abstract class _Toolchain extends Toolchain {
   String get emulatorPath;
   @override
   String get flutterPath;
-  @override
-  String get xcrunPath;
   @override
   @JsonKey(ignore: true)
   _$$_ToolchainCopyWith<_$_Toolchain> get copyWith =>

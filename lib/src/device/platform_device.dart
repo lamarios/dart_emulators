@@ -6,7 +6,6 @@ import 'package:emulators/src/flutter.dart';
 import 'package:emulators/src/utils/strings.dart';
 
 part 'platforms/android_device.dart';
-part 'platforms/ios_device.dart';
 part 'platforms/unimplemented_device.dart';
 
 typedef DeviceIO<A> = EIO<DeviceError, A>;

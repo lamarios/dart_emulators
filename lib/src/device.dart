@@ -20,13 +20,6 @@ class Device {
         );
         break;
 
-      case DevicePlatform.ios:
-        platform = IosDevice(
-          toolchain: toolchain,
-          state: state,
-        );
-        break;
-
       case DevicePlatform.unimplemented:
         platform = UnimplementedDevice(state: state);
         break;
@@ -51,8 +44,7 @@ class Device {
   Future<List<int>> screenshot() => platform.screenshot.runFutureOrThrow();
 
   /// Maybe map the device id back to the device name
-  Future<void> maybeResolveName() =>
-      platform.maybeResolveName.runFutureOrThrow();
+  Future<void> maybeResolveName() => platform.maybeResolveName.runFutureOrThrow();
 
   /// Returns true if the device is similar to the given [DeviceState].
   bool similar(DeviceState other) => state.similar(other);
@@ -61,10 +53,7 @@ class Device {
   Future<void> waitUntilRunning({
     Duration timeout = const Duration(seconds: 100),
   }) =>
-      PlatformDevice.waitUntilRunning(platform)
-          .provide(toolchain)
-          .runFutureOrThrow()
-          .timeout(timeout);
+      PlatformDevice.waitUntilRunning(platform).provide(toolchain).runFutureOrThrow().timeout(timeout);
 
   Device clone([DeviceState Function(DeviceState s)? modifyState]) => Device(
         state: modifyState?.call(state) ?? state,
@@ -73,7 +62,6 @@ class Device {
 
   static final list = [
     AndroidDevice.list.logOrElse((_) => IList()),
-    IosDevice.list.logOrElse((_) => IList()),
   ].collectPar.map((l) => l.expand<Device>(identity).toIList());
 
   static final shutdownAll = ToolchainIO.envWithZIO(
@@ -85,9 +73,7 @@ class Device {
         ),
   ).flatMap((_) => _.map((d) => d.platform.shutdown).collectDiscard.lift());
 
-  ZIO<Scope, DeviceError, Device> get safeBoot => platform.boot
-      .acquireRelease((_) => clone().platform.shutdown.ignoreLogged)
-      .as(this);
+  ZIO<Scope, DeviceError, Device> get safeBoot => platform.boot.acquireRelease((_) => clone().platform.shutdown.ignoreLogged).as(this);
 
   static RIO<Toolchain, Unit> forEach({
     required Future<void> Function(Device device) process,
@@ -97,9 +83,7 @@ class Device {
       list.flatMap(
         (devices) => nameOrIds
             .map(
-              (d) => _findDevice(devices, d)
-                  .flatMap((_) => _processDevice(_, process, timeout))
-                  .ignoreLogged,
+              (d) => _findDevice(devices, d).flatMap((_) => _processDevice(_, process, timeout)).ignoreLogged,
             )
             .collectDiscard
             .lift(),
@@ -107,13 +91,10 @@ class Device {
 }
 
 // == forEach helpers
-final _findDevice = (IList<Device> devices, String nameOrId) => devices
-    .where((d) => d.state.id == nameOrId || d.state.name == nameOrId)
-    .firstOption
-    .toZIOOrFail(() => DeviceError.foreachFailure(
-          phase: '_findDevice',
-          message: 'Could not find device: $nameOrId',
-        ));
+final _findDevice = (IList<Device> devices, String nameOrId) => devices.where((d) => d.state.id == nameOrId || d.state.name == nameOrId).firstOption.toZIOOrFail(() => DeviceError.foreachFailure(
+      phase: '_findDevice',
+      message: 'Could not find device: $nameOrId',
+    ));
 
 DeviceIO<Unit> _processDevice(
   Device device,
@@ -122,9 +103,7 @@ DeviceIO<Unit> _processDevice(
 ) =>
     device.safeBoot
         .zipLeft(
-          PlatformDevice.waitUntilRunning(device.platform)
-              .provide(device.toolchain)
-              .lift(),
+          PlatformDevice.waitUntilRunning(device.platform).provide(device.toolchain).lift(),
         )
         .flatMapThrowable(
           (_) => process(device),

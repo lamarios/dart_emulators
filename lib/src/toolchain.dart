@@ -47,7 +47,6 @@ class Toolchain with _$Toolchain {
     required String avdmanagerPath,
     required String emulatorPath,
     required String flutterPath,
-    required String xcrunPath,
   }) = _Toolchain;
 
   static Future<Toolchain> build() => [
@@ -64,7 +63,6 @@ class Toolchain with _$Toolchain {
               avdmanagerPath: paths[1],
               emulatorPath: paths[2],
               flutterPath: paths[3],
-              xcrunPath: paths[4],
             ),
           )
           .runFutureOrThrow();
@@ -111,10 +109,4 @@ class Toolchain with _$Toolchain {
 
   /// Wrapper for the `avdmanager` CLI tool from the Android SDK
   ProcessRunner avdmanager(List<String> args) => run(avdmanagerPath, args);
-
-  /// Wrapper for the `simctl` CLI tool from xcode
-  ProcessRunner simctl(List<String> args) => run(xcrunPath, [
-        "simctl",
-        ...args,
-      ]);
 }
